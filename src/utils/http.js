@@ -1,7 +1,7 @@
 import axios from "axios"
 import qs from 'qs'
 import { Toast } from 'antd-mobile'
-import _ from '@/assets/utils'
+import _ from './tools'
 
 const http = axios.create({
   baseURL: '/api',
