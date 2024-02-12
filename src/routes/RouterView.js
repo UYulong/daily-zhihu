@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import { Routes, Route, useNavigate, useLocation, useParams, useSearchParams } from 'react-router-dom'
 import routes from '.'
+import Loading from '@/components/Loading'
 
 const Element = (props) => {
   const { component: Component, meta } = props
@@ -16,7 +17,7 @@ const Element = (props) => {
 }
 
 const RouterView = () => {
-  return <Suspense fallback={<>加载中...</>}>
+  return <Suspense fallback={<Loading />}>
     <Routes>
       {
         routes.map(route => {

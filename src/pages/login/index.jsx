@@ -1,8 +1,12 @@
 import React, { memo } from 'react'
 
+import { Button } from 'antd-mobile'
+
 const Login = memo(() => {
   return (
-    <div>Login</div>
+    <div>
+      <Button>Login</Button>
+    </div>
   )
 })
 
