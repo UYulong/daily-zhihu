@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
-import '@/assets/reset.min.css'
 import 'lib-flexible'
-
 import './index.less'
 
 // 处理最大宽度

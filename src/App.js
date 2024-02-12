@@ -1,10 +1,11 @@
-import './App.less'
+import { BrowserRouter } from 'react-router-dom'
+import RouterView from './routes/RouterView';
 
 function App() {
   return (
-    <div className="App">
-      123
-    </div>
+    <BrowserRouter>
+      <RouterView />
+    </BrowserRouter>
   );
 }
 
