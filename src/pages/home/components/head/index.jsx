@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from 'react'
-
 import defaultAvatar from '@/assets/images/timg.jpg'
-import './index.less'
+
+import { HomeHeadbox } from './indexCss'
 
 const HomeHead = memo((props) => {
   const { today } = props
@@ -17,7 +17,7 @@ const HomeHead = memo((props) => {
   }, [today])
 
   return (
-    <div className='home-head_box'>
+    <HomeHeadbox>
       <div className="text">
         <div className="time">
           <span>{time.day}</span>
@@ -29,8 +29,7 @@ const HomeHead = memo((props) => {
       <div className="avatar">
         <img alt='avatar' src={defaultAvatar} />
       </div>
-
-    </div>
+    </HomeHeadbox>
   )
 })
 

@@ -5,7 +5,7 @@ import NewsItem from '@/components/NewsItem';
 
 import dayjs from 'dayjs';
 
-import './index.less'
+import { NewsBox } from './indexCss'
 
 const NewsList = memo((props) => {
   const { list } = props
@@ -14,7 +14,7 @@ const NewsList = memo((props) => {
   // console.log(list);
 
   return (
-    <div className='news-box'>
+    <NewsBox>
       {
         list.map((item, index) => {
           const { date, stories } = item
@@ -33,7 +33,7 @@ const NewsList = memo((props) => {
           </React.Fragment>
         })
       }
-    </div>
+    </NewsBox>
   )
 })
 

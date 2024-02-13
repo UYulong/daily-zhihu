@@ -1,4 +1,6 @@
-.home-head_box {
+import styled from "styled-components"
+
+export const HomeHeadbox = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -37,4 +39,4 @@
             border-left: 1px solid #DDD;
         }
     }
-  }
+`

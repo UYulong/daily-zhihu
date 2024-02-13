@@ -1,8 +1,8 @@
 import React, { memo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Swiper, Image } from 'antd-mobile'
 
-import './index.less'
-import { useNavigate } from 'react-router-dom'
+import { BannerBox } from './indexCss'
 
 const SwiperBox = memo((props) => {
   const { list } = props
@@ -13,7 +13,7 @@ const SwiperBox = memo((props) => {
   }
 
   return (
-    <div className='banner-box'>
+    <BannerBox>
       <Swiper>
         {
           list.map((item) => {
@@ -29,7 +29,7 @@ const SwiperBox = memo((props) => {
           })
         }
       </Swiper>
-    </div>
+    </BannerBox>
   )
 })
 

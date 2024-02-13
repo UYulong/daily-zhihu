@@ -15,6 +15,7 @@
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.8",
+    "babel-plugin-styled-components-px2rem": "^1.5.5",
     "babel-preset-react-app": "^10.0.1",
     "bfj": "^7.0.2",
     "browserslist": "^4.18.1",
@@ -58,6 +59,7 @@
     "semver": "^7.3.5",
     "source-map-loader": "^3.0.0",
     "style-loader": "^3.3.1",
+    "styled-components": "^6.1.8",
     "tailwindcss": "^3.0.2",
     "terser-webpack-plugin": "^5.2.5",
     "web-vitals": "^2.1.0",
@@ -143,7 +145,27 @@
   },
   "babel": {
     "presets": [
-      "react-app"
+      [
+        "react-app",
+        {
+          "targets": {
+            "chrome": "49",
+            "ios": "10"
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      [
+        "styled-components-px2rem",
+        {
+          "rootValue": 37.5,
+          "unitPrecision": 5,
+          "minPixelValue": 0,
+          "multiplier": 1,
+          "transformRuntime": false
+        }
+      ]
     ]
   }
 }

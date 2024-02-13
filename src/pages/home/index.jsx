@@ -8,7 +8,7 @@ import API from '@/apis'
 import NewsList from './components/news'
 import SkeletonAgain from '@/components/Skeleton'
 
-import './index.less'
+import { Homebox } from './indexCss'
 
 const Home = memo(() => {
   const [today, setToday] = useState(),
@@ -41,7 +41,7 @@ const Home = memo(() => {
   }, [])
 
   return (
-    <div>
+    <Homebox>
       {/* 头部区域 */}
       {today && <HomeHead today={today} />}
 
@@ -59,7 +59,7 @@ const Home = memo(() => {
         数据加载中
         <DotLoading />
       </div>
-    </div>
+    </Homebox>
   )
 })
 
