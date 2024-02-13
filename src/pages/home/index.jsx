@@ -37,8 +37,25 @@ const Home = memo(() => {
   // 获取Dom元素
   const loadBox = useRef()
   useEffect(() => {
-    console.log(loadBox.current);
-  }, [])
+    const _loadMoreDom = loadBox.current
+    let obIns = new IntersectionObserver(async changes => {
+      const item = changes[0]
+
+      if (item.isIntersecting) {
+        const time = newsList[newsList.length - 1].date
+
+        const res = await API.queryNewsBefore(time)
+        setNewsList([...newsList, res])
+      }
+    })
+
+    obIns.observe(_loadMoreDom)
+
+    return () => {
+      obIns.unobserve(_loadMoreDom)
+      obIns = null
+    }
+  }, [newsList])
 
   return (
     <Homebox>
