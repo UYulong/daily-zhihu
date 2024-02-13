@@ -3,6 +3,8 @@ import HomeHead from './components/head'
 import SwiperBox from './components/swiper'
 
 import API from '@/apis'
+import NewsList from './components/news'
+import SkeletonAgain from '@/components/Skeleton'
 
 const Home = memo(() => {
   const [today, setToday] = useState(),
@@ -15,8 +17,12 @@ const Home = memo(() => {
         const { date, stories, top_stories } = await API.queryNewsLatest()
 
         setToday(date)
-        setNewsList(stories)
         setBannerData(top_stories)
+
+        setNewsList([{
+          date,
+          stories
+        }])
       } catch (_) { }
     }
 
@@ -30,6 +36,9 @@ const Home = memo(() => {
 
       {/* 轮播区域 */}
       {bannerData.length > 0 ? <SwiperBox list={bannerData} /> : null}
+
+      {/* 新闻列表 */}
+      {newsList.length === 0 ? <SkeletonAgain /> : <NewsList list={newsList} />}
     </div>
   )
 })
