@@ -34,8 +34,7 @@ const isArrayLike = function isArrayLike(obj) {
   if (isArray(obj)) return true
   let length = !!obj && 'length' in obj && obj.length
   if (isFunction(obj) || isWindow(obj)) return false
-  return length === 0 ||
-    typeof length === "number" && length > 0 && (length - 1) in obj
+  return length === 0 || typeof length === "number" && length > 0 && (length - 1) in obj
 }
 
 // 检测是否为一个纯粹的对象(标准普通对象)
