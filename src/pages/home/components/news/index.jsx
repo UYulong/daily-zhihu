@@ -11,7 +11,6 @@ const NewsList = memo((props) => {
   const { list } = props
 
   if (list.length === 0) return null
-  // console.log(list);
 
   return (
     <NewsBox>
