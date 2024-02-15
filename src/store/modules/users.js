@@ -1,7 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import API from '@/apis'
+
+// 获取用户信息
+export const fetchUserInfo = createAsyncThunk('users/userInfo', async () => {
+  try {
+    const { data } = await API.queryUserInfo()
+    return data
+  } catch (e) {
+    console.log(e);
+  }
+})
 
 const usersSlice = createSlice({
   name: 'users',
+
   initialState: {
     info: {}
   },
@@ -10,6 +22,13 @@ const usersSlice = createSlice({
     setInfo: (state, action) => {
       state.info = action.payload
     }
+  },
+
+  extraReducers(builder) {
+    builder
+      .addCase(fetchUserInfo.fulfilled, (state, { payload }) => {
+        state.info = payload
+      })
   }
 })
 
