@@ -27,7 +27,7 @@ const usersSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchUserInfo.fulfilled, (state, { payload }) => {
-        state.info = payload
+        state.info = payload || {}
       })
   }
 })
