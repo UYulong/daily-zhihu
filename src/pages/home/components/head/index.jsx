@@ -1,7 +1,12 @@
-import React, { memo, useMemo } from 'react'
+import React, { memo, useEffect, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
+import { fetchUserInfo } from '@/store/modules/users'
 import defaultAvatar from '@/assets/images/timg.jpg'
 
 import { HomeHeadbox } from './indexCss'
+
 
 const HomeHead = memo((props) => {
   const { today } = props
@@ -16,6 +21,21 @@ const HomeHead = memo((props) => {
     }
   }, [today])
 
+
+  const info = useSelector(state => state.users.info)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (Reflect.ownKeys(info).length === 0) {
+      dispatch(fetchUserInfo())
+    }
+  }, [])
+
+  const navigate = useNavigate()
+  const handleClickAvatar = () => {
+    navigate('/personal')
+  }
+
   return (
     <HomeHeadbox>
       <div className="text">
@@ -26,8 +46,8 @@ const HomeHead = memo((props) => {
         <div className="title">知乎日报</div>
       </div>
 
-      <div className="avatar">
-        <img alt='avatar' src={defaultAvatar} />
+      <div className="avatar" onClick={handleClickAvatar}>
+        <img alt='avatar' src={info?.pic ? info?.pic : defaultAvatar} />
       </div>
     </HomeHeadbox>
   )
