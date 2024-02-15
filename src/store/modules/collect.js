@@ -5,7 +5,6 @@ import API from '@/apis'
 export const fetchCollectList = createAsyncThunk('collect/list', async () => {
   try {
     const { data } = await API.queryStoreList()
-    console.log(data);
     return data
   } catch (e) {
     console.log(e);

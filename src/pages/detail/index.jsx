@@ -10,6 +10,7 @@ import { DetailBox } from './indexCss'
 import SkeletonAgain from '@/components/Skeleton'
 import { fetchUserInfo } from '@/store/modules/users'
 import { fetchCollectList, removeNews } from '@/store/modules/collect'
+import _ from '@/utils/tools'
 
 const Detail = memo(() => {
   const navigate = useNavigate()
@@ -106,7 +107,12 @@ const Detail = memo(() => {
 
   const handleCollect = async () => {
     // 先判断是否登录
-    if (isGetUserInfo) {
+    console.log('okok', isGetUserInfo, _.storage.get('TK') === null);
+    if (isGetUserInfo || _.storage.get('TK') === null) {
+      Toast.show({
+        icon: 'fail',
+        content: '请先登录'
+      })
       navigate(`/login?to=${location.pathname}`)
       return
     }
