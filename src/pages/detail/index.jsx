@@ -1,21 +1,24 @@
-import React, { memo, useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { Badge, SpinLoading } from 'antd-mobile'
+import React, { memo, useEffect, useMemo, useState } from 'react'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Badge, SpinLoading, Toast } from 'antd-mobile'
 import { LeftOutline, MessageOutline, LikeOutline, StarOutline, MoreOutline } from 'antd-mobile-icons'
 
 import API from '@/apis'
 
 import { DetailBox } from './indexCss'
 import SkeletonAgain from '@/components/Skeleton'
+import { fetchUserInfo } from '@/store/modules/users'
+import { fetchCollectList, removeNews } from '@/store/modules/collect'
 
 const Detail = memo(() => {
   const navigate = useNavigate()
   const params = useParams()
+  const location = useLocation()
 
   const [loading, setLoading] = useState(false),
     [info, setInfo] = useState(null),
-    [story, setStory] = useState(null),
-    [isCollect, setIsCollect] = useState(false)
+    [story, setStory] = useState(null)
 
   // 获取文章详情
   useEffect(() => {
@@ -78,8 +81,95 @@ const Detail = memo(() => {
     })()
   }, [])
 
-  // 收藏
-  const collectHandle = () => { }
+  /* 收藏逻辑 */
+  const { info: userinfo } = useSelector(state => state.users)
+  const { list } = useSelector(state => state.collect)
+  const dispatch = useDispatch()
+
+  // 是否获取过用户信息
+  const isGetUserInfo = Reflect.ownKeys(userinfo).length === 0
+  useEffect(() => {
+    if (isGetUserInfo) {
+      dispatch(fetchUserInfo())
+    }
+
+    if (!isGetUserInfo && list.length === 0) {
+      // 获取 收藏列表
+      dispatch(fetchCollectList())
+    }
+  }, [])
+
+  // 当前文章是否已经收藏
+  const isCollect = useMemo(() => {
+    return list.some(item => +item.news.id === +params.id)
+  }, [list, params])
+
+  const handleCollect = async () => {
+    // 先判断是否登录
+    if (isGetUserInfo) {
+      navigate(`/login?to=${location.pathname}`)
+      return
+    }
+
+    // 判断是否收藏
+    if (isCollect) {
+      // 取消收藏
+      try {
+        setLoading(true)
+        const _item = list.find(item => +item.news.id === +params.id)
+
+        if (!_item) {
+          Toast.show({
+            icon: 'fail',
+            content: '取消失败'
+          })
+          return
+        }
+
+        const { code } = await API.removeStore(_item.id)
+        if (+code === 0) {
+          Toast.show({
+            icon: 'success',
+            content: '取消成功',
+          })
+
+          dispatch(removeNews(_item.id))
+        } else {
+          Toast.show({
+            icon: 'fail',
+            content: '取消失败',
+          })
+        }
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setLoading(false)
+      }
+    } else {
+      // 收藏
+      try {
+        setLoading(true)
+        const { code } = await API.addStore(params.id)
+        if (+code === 0) {
+          Toast.show({
+            icon: 'success',
+            content: '收藏成功',
+          })
+
+          dispatch(fetchCollectList())
+        } else {
+          Toast.show({
+            icon: 'fail',
+            content: '收藏失败',
+          })
+        }
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setLoading(false)
+      }
+    }
+  }
 
   return (
     <DetailBox>
@@ -99,7 +189,7 @@ const Detail = memo(() => {
           <Badge content={story?.comments || 0}><MessageOutline /></Badge>
           <Badge content={story && story.popularity || 0}><LikeOutline /></Badge>
           <span className={isCollect ? 'stored' : ''}
-            onClick={collectHandle}>
+            onClick={handleCollect}>
             {loading ? <SpinLoading /> : <StarOutline />}
           </span>
           <span><MoreOutline /></span>
