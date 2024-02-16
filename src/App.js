@@ -1,10 +1,13 @@
 import { BrowserRouter } from 'react-router-dom'
 import RouterView from './routes/RouterView';
+import { KeepAliveProvider } from 'keepalive-react-component'
 
 function App() {
   return (
     <BrowserRouter>
-      <RouterView />
+      <KeepAliveProvider>
+        <RouterView />
+      </KeepAliveProvider>
     </BrowserRouter>
   );
 }
