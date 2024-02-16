@@ -45,7 +45,7 @@ const Personal = memo(() => {
       </div>
 
       <div>
-        <Link to='/mystore' className="tab">
+        <Link to='/collect' className="tab">
           我的收藏
           <RightOutline />
         </Link>

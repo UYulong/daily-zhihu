@@ -8,8 +8,9 @@ const NewsItem = memo(({ info }) => {
 
   if (!info) return null
 
-  const { id, title, hint, images } = info
-  if (!images) images = ['']
+  const { id, title, hint, images = [''], image } = info
+
+  const imgSrc = Array.isArray(images) && images[0] ? Array.isArray(images) && images[0] : image ? image : ''
 
   return (
     <div className='news-item'>
@@ -18,7 +19,7 @@ const NewsItem = memo(({ info }) => {
           <h4 className="title">{title}</h4>
           <p className="author">{hint}</p>
         </div>
-        <Image lazy src={Array.isArray(images) && images[0] || ""} />
+        <Image lazy src={imgSrc} />
       </Link>
     </div>
   )
