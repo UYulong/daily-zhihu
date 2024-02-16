@@ -21,6 +21,10 @@ const collectSlice = createSlice({
   reducers: {
     removeNews: (state, { payload }) => {
       state.list = state.list.filter(item => +item.id !== +payload)
+    },
+
+    clearNewsList: (state) => {
+      state.list = []
     }
   },
 
@@ -32,6 +36,6 @@ const collectSlice = createSlice({
   }
 })
 
-export const { removeNews } = collectSlice.actions
+export const { removeNews, clearNewsList } = collectSlice.actions
 
 export default collectSlice.reducer

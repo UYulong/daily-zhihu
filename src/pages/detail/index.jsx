@@ -107,7 +107,6 @@ const Detail = memo(() => {
 
   const handleCollect = async () => {
     // 先判断是否登录
-    console.log('okok', isGetUserInfo, _.storage.get('TK') === null);
     if (isGetUserInfo || _.storage.get('TK') === null) {
       Toast.show({
         icon: 'fail',
